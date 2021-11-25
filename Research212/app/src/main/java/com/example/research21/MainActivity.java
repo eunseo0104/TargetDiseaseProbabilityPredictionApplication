@@ -44,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Intent intent = getIntent();
+        TextView hello = (TextView)findViewById(R.id.hello);
+        hello.setText(intent.getStringExtra("name")+"님, 안녕하세요");
         findViewById(R.id.fileOpenBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

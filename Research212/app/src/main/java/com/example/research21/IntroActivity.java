@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -27,8 +28,9 @@ public class IntroActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
-                Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+                Intent intent = new Intent(IntroActivity.this, UserActivity.class);
                 startActivity(intent);
+                ActivityCompat.finishAffinity(IntroActivity.this);
             }
         }
     };
