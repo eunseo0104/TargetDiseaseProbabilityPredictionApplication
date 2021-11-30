@@ -17,6 +17,7 @@ import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +47,48 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
         TextView hello = (TextView)findViewById(R.id.hello);
-        hello.setText(intent.getStringExtra("name")+"님, 안녕하세요");
+        TextView obesity = findViewById(R.id.obesity);
+        ImageView check = findViewById(R.id.check);
+        TextView userHeight = findViewById(R.id.userHeight);
+        TextView userAge = findViewById(R.id.userAge);
+        TextView userWeight = findViewById(R.id.userWeight);
+        TextView userBlood = findViewById(R.id.userBlood);
+
+        String name = intent.getStringExtra("name");
+        hello.setText(name+"님, 안녕하세요");
+        userHeight.setText(""+intent.getDoubleExtra("height", 0.0)+"cm");
+        userAge.setText(""+intent.getIntExtra("age", 0)+"세");
+        userWeight.setText(""+intent.getDoubleExtra("weight", 0.0)+"Kg");
+        userBlood.setText(intent.getStringExtra("blood")+"형");
+
+        double height = intent.getDoubleExtra("height", 1);
+        double weight = intent.getDoubleExtra("weight", 1);
+        double o_rate = Math.round(weight/((height/100)*(height/100))*100)/100.0;
+        String blood = intent.getStringExtra("blood");
+        String obesityStr="";
+        float checkX=0;
+        if(o_rate<=18.5){
+            obesityStr="저체중";
+            checkX=-350f;
+
+        }else if(o_rate<=23){
+            obesityStr="정상";
+            checkX=-130f;
+
+        }else if(o_rate<=25){
+            obesityStr="과체중";
+            checkX=50f;
+
+        }else if(o_rate<=30){
+            obesityStr="비만";
+            checkX=250f;
+        }else{
+            obesityStr="고도비만";
+            checkX=430f;
+        }
+        check.setX(checkX);
+        obesity.setText(name+"님의 BMI는 "+o_rate+"로 "+obesityStr+"입니다.");
+
         findViewById(R.id.fileOpenBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
